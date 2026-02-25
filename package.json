@@ -1,0 +1,28 @@
+{
+  "name": "playwright-poc",
+  "version": "1.0.0",
+  "description": "POC comparing Playwright vs Katalon for test automation",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "node backend/server.js",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "test": "npx playwright test --trace on",
+    "test:headed": "npx playwright test --headed",
+    "test:ui": "npx playwright test --ui",
+    "test:report": "npx playwright show-report",
+    "allure:generate": "allure generate allure-results -o allure-report --clean",
+    "allure:report": "allure open allure-report",
+    "allure:reset": "node -e \"const fs=require('fs');const p=require('path');['allure-results','allure-report'].forEach(d=>{try{fs.rmSync(p.join(process.cwd(),d),{recursive:true});console.log('Removed '+d);}catch(e){}})\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "allure-commandline": "^2.36.0",
+    "allure-playwright": "^3.4.5"
+  }
+}

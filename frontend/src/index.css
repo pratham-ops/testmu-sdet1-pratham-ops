@@ -1,0 +1,67 @@
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-tertiary: #1a1a25;
+  --bg-card: linear-gradient(145deg, #15151f 0%, #0d0d14 100%);
+  --accent-primary: #00d4aa;
+  --accent-secondary: #00a8ff;
+  --accent-gradient: linear-gradient(135deg, #00d4aa 0%, #00a8ff 100%);
+  --text-primary: #e8e8ed;
+  --text-secondary: #8b8b99;
+  --text-muted: #5a5a6e;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --shadow-glow: 0 0 40px rgba(0, 212, 170, 0.15);
+  --font-display: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-display);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 212, 170, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(0, 168, 255, 0.08) 0%, transparent 40%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font-family: var(--font-display);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input, textarea {
+  font-family: var(--font-display);
+  outline: none;
+  border: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
