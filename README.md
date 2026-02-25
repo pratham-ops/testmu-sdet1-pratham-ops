@@ -53,10 +53,38 @@ npm run test:headed
 npm run test:ui
 ```
 
-### View Report
+### View Playwright HTML Report
 ```bash
 npm run test:report
 ```
+
+### Allure Reports
+
+Allure results are automatically collected every time tests run (via the `allure-playwright` reporter configured in `playwright.config.js`). Results accumulate across runs, giving you a historical trend view.
+
+**Generate and open the Allure report:**
+```bash
+# 1. Run your tests (results are written to allure-results/)
+npm test
+
+# 2. Generate the HTML report from collected results
+npm run allure:generate
+
+# 3. Open the report in your browser
+npm run allure:report
+```
+
+**Reset/clear all Allure data** (start fresh before a new test cycle):
+```bash
+npm run allure:reset
+```
+
+> **Note:** Allure requires the [Allure CLI](https://allurereport.org/docs/install/) to be installed and available on your `PATH`. Install it via:
+> ```bash
+> npm install -g allure-commandline
+> # or via Scoop on Windows:
+> scoop install allure
+> ```
 
 ### Run Specific Test File
 ```bash
@@ -186,7 +214,7 @@ Key settings in `playwright.config.js`:
 - Base URL: `http://localhost:3001`
 - Retries: 2 on CI, 0 locally
 - Workers: 1 on CI for stability
-- Reporters: List, HTML, JSON
+- Reporters: List, HTML, JSON, **Allure**
 - Screenshots: On failure
 - Video: On first retry
 - Traces: On first retry
