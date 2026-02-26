@@ -1,7 +1,3 @@
-# Playwright vs Katalon - POC
-
-A proof of concept demonstrating **Playwright** test automation capabilities. This project includes a full-stack Task Manager application with comprehensive test suites to showcase Playwright's features for comparison with Katalon Studio.
-
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -181,51 +177,3 @@ git push origin main
 
 # Or manually trigger via GitHub Actions UI
 ```
-
-## 📊 Playwright vs Katalon Comparison
-
-| Feature | Playwright | Katalon |
-|---------|------------|---------|
-| **Language** | JavaScript/TypeScript/Python/Java/.NET | Groovy (Java-based) |
-| **Speed** | Very fast, parallel execution | Moderate |
-| **Browser Support** | Chromium, Firefox, WebKit | Chrome, Firefox, Edge, Safari |
-| **Mobile Testing** | Device emulation | Native mobile support |
-| **API Testing** | Built-in | Requires plugins |
-| **Learning Curve** | Moderate (code-based) | Low (visual recorder) |
-| **CI/CD** | Excellent (native support) | Good |
-| **Cost** | Free & Open Source | Free tier + Paid plans |
-| **Auto-wait** | Built-in | Requires configuration |
-| **Trace Viewer** | Excellent debugging | Limited |
-
-## 🎯 Key Playwright Features Demonstrated
-
-1. **Auto-waiting** - No explicit waits needed
-2. **Parallel Execution** - Tests run concurrently
-3. **Multiple Browsers** - Single codebase, all browsers
-4. **API Testing** - Direct HTTP request support
-5. **Visual Testing** - Screenshot comparison
-6. **Trace Viewer** - Debugging with traces
-7. **Mobile Emulation** - Test responsive designs
-8. **CI/CD Ready** - GitHub Actions integration
-
-## 📝 Test Configuration
-
-Key settings in `playwright.config.js`:
-- Base URL: `http://localhost:3001`
-- Retries: 2 on CI, 0 locally
-- Workers: 1 on CI for stability
-- Reporters: List, HTML, JSON, **Allure**
-- Screenshots: On failure
-- Video: On first retry
-- Traces: On first retry
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Write tests for new features
-4. Submit a pull request
-
-## 📄 License
-
-MIT License - Feel free to use this POC for your evaluation needs.
