@@ -118,7 +118,7 @@ AZURE_OPENAI_API_VERSION=2024-12-01-preview
 
 ```bash
 # Run tests and automatically generate AI explanations
-npm run test:explain
+npm run test
 
 # Generate explanations for existing test results
 npm run explain
