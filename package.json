@@ -11,6 +11,9 @@
     "test:headed": "npx playwright test --headed",
     "test:ui": "npx playwright test --ui",
     "test:report": "npx playwright show-report",
+    "test:explain": "npx playwright test --trace on & python scripts/failure_explainer.py",
+    "explain": "python scripts/failure_explainer.py",
+    "explain:report": "start test-failure-explanations/failure-explanations.html",
     "allure:generate": "allure generate allure-results -o allure-report --clean",
     "allure:report": "allure open allure-report",
     "allure:reset": "node -e \"const fs=require('fs');const p=require('path');['allure-results','allure-report'].forEach(d=>{try{fs.rmSync(p.join(process.cwd(),d),{recursive:true});console.log('Removed '+d);}catch(e){}})\""

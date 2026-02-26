@@ -14,7 +14,7 @@ test.describe('Responsive Design', () => {
 
     test('should display login form properly on mobile', async ({ page }) => {
       const loginPage = new LoginPage(page);
-      await loginPage.goto('/');
+      // await loginPage.goto('/');
       await expect(loginPage.loginForm).toBeVisible();
       await expect(loginPage.loginEmail).toBeVisible();
       await expect(loginPage.loginPassword).toBeVisible();

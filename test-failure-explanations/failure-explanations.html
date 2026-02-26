@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Failure Analysis Report</title>
+    <style>
+        :root {
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --text-color: #eee;
+            --accent-color: #e94560;
+            --success-color: #4ade80;
+            --warning-color: #fbbf24;
+            --border-color: #0f3460;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--card-bg) 0%, #1a1a2e 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        header h1 { color: var(--accent-color); margin-bottom: 0.5rem; }
+        
+        .summary {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .summary-item { text-align: center; }
+        .summary-item .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .test-failure {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-header h3 { color: var(--accent-color); }
+        .duration { color: var(--warning-color); font-size: 0.9rem; }
+        .test-file { color: #888; font-size: 0.9rem; margin-bottom: 1rem; }
+        
+        .error-section {
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .error-section h4 { color: var(--accent-color); margin-bottom: 0.5rem; }
+        
+        .error-message {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #ff8fa3;
+        }
+        
+        .analysis-section { display: grid; gap: 1rem; }
+        
+        .root-cause, .explanation, .suggested-fix {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        
+        .root-cause h4 { color: #f472b6; }
+        .explanation h4 { color: #60a5fa; }
+        .suggested-fix h4 { color: var(--success-color); }
+        
+        .root-cause { border-left: 4px solid #f472b6; }
+        .explanation { border-left: 4px solid #60a5fa; }
+        .suggested-fix { border-left: 4px solid var(--success-color); }
+        
+        h4 { margin-bottom: 0.5rem; }
+        .content { font-size: 0.95rem; white-space: pre-wrap; }
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Test Failure Analysis Report</h1>
+            <p>AI-powered analysis of test failures using Azure OpenAI</p>
+            <div class="summary">
+                <div class="summary-item">
+                    <div class="value">4</div>
+                    <div>Failed Tests</div>
+                </div>
+                <div class="summary-item">
+                    <div class="value">2026-02-26 14:14</div>
+                    <div>Generated</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            
+        <div class="test-failure">
+            <div class="test-header">
+                <h3>should display login form properly on mobile</h3>
+                <span class="duration">14007ms</span>
+            </div>
+            <div class="test-file">responsive.spec.js</div>
+            
+            <div class="error-section">
+                <h4>❌ Error</h4>
+                <pre class="error-message">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+Locator: getByTestId(&#039;login-form&#039;)
+Expected: visible
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+[2m  - Expect &quot;toBeVisible&quot; with timeout 5000ms[22m
+[2m  - waiting for getByTestId(&#039;login-form&#039;)[22m
+
+
+[0m [90m 16 |[39m       [36mconst[39m loginPage [33m=[39m [36mnew[39m [33mLoginPage[39m(page)[33m;[39m
+ [90m 17 |[39m       [90m// await loginPage.goto(&#039;/&#039;);[39m
+[31m[1m&gt;[22m[39m[90m 18 |[39m       [36mawait[39m expect(loginPage[33m.[39mloginForm)[33m.[39mtoBeVisible()[33m;[39m
+ [90m    |[39m                                         [31m[1m^[22m[39m
+ [90m 19 |[39m       [36mawait[39m expect(loginPage[33m.[39mloginEmail)[33m.[39mtoBeVisible()[33m;[39m
+ [90m 20 |[39m       [36mawait[39m expect(loginPage[33m.[39mloginPassword)[33m.[39mtoBeVisible()[33m;[39m
+ [90m 21 |[39m       [36mawait[39m expect(loginPage[33m.[39mloginSubmit</pre>
+            </div>
+
+            <div class="analysis-section">
+                <div class="root-cause">
+                    <h4>🎯 Root Cause</h4>
+                    <div class="content">See explanation</div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>💡 Explanation</h4>
+                    <div class="content">Root Cause: The login form element is not being found on the page during the test.
+
+Explanation: The test expects the login form, identified by the test id &#039;login-form&#039;, to be visible. However, it fails because the element doesn&#039;t exist on the page within the allotted 5000ms. Notably, the navigation step (loginPage.goto(&#039;/&#039;)) is commented out, which suggests that the page might not be loading the login form at all. This results in the locator for the login form not being found, causing the test to time out.
+
+Suggested Fix: 
+1. Uncomment or add the navigation step (e.g., await loginPage.goto(&#039;/&#039;)) to ensure the test navigates to the correct page where the login form is rendered.
+2. Verify that the test ID &#039;login-form&#039; is correctly assigned in the application code.
+3. If navigation is correct, double-check the responsiveness of the element on mobile or adjust the waiting timeout if the element takes longer to appear.
+4. Run the test again after implementing these adjustments to confirm that the login form becomes visible as expected.</div>
+                </div>
+                
+                <div class="suggested-fix">
+                    <h4>🔧 Suggested Fix</h4>
+                    <div class="content">See explanation</div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="test-failure">
+            <div class="test-header">
+                <h3>should filter tasks by search term</h3>
+                <span class="duration">13736ms</span>
+            </div>
+            <div class="test-file">search-filter.spec.js</div>
+            
+            <div class="error-section">
+                <h4>❌ Error</h4>
+                <pre class="error-message">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+Locator:  locator(&#039;.task-item:visible&#039;)
+Expected: [32m1[39m
+Received: [31m3[39m
+Timeout:  5000ms
+
+Call log:
+[2m  - Expect &quot;toHaveCount&quot; with timeout 5000ms[22m
+[2m  - waiting for locator(&#039;.task-item:visible&#039;)[22m
+[2m    8 × locator resolved to 3 elements[22m
+[2m      - unexpected value &quot;3&quot;[22m
+
+
+[0m [90m 34 |[39m       [36mawait[39m dashboardPage[33m.[39msearch([32m&#039;Unique Search&#039;[39m)[33m;[39m
+ [90m 35 |[39m       [36mawait[39m expect(dashboardPage[33m.[39mpage[33m.[39mgetByText(uniqueTitle))[33m.[39mtoBeVisible()[33m;[39m
+[31m[1m&gt;[22m[39m[90m 36 |[39m       [36mawait[39m expect(dashboardPage[33m.[39mvisibleTaskItems())[33m.[39mtoHaveCount([35m1[39m)[33m;[39m
+ [90m    |[39m                                                      [31m[1m^[22m[39m
+ [90m 37 |[39m     })[33m;[39m
+ [90m 38 |[39m
+ [90m 39 |[39m     test([</pre>
+            </div>
+
+            <div class="analysis-section">
+                <div class="root-cause">
+                    <h4>🎯 Root Cause</h4>
+                    <div class="content">See explanation</div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>💡 Explanation</h4>
+                    <div class="content">Root Cause: The test expected exactly one visible task after applying the search filter, but three tasks remained visible.
+
+Explanation: The test is designed to verify that when a search term is entered (&quot;Unique Search&quot;), only the matching task should be visible. Instead, the application&#039;s filtering functionality is returning three visible tasks. This discrepancy could be due to one of the following reasons:
+- The search filter logic is not correctly implemented, allowing non-matching tasks to remain visible.
+- The test data setup might have multiple tasks that partially match the search term, resulting in an unintentional count.
+- There might be timing issues or delays causing some tasks not to be hidden as expected.
+
+Suggested Fix:
+1. Review the search/filter logic in the application to ensure that it correctly hides non-matching tasks when a search term is provided.
+2. Check the test data setup. Make sure that only one task uniquely matches the search term or update the search term to ensure it only targets one task.
+3. Consider adding more precise assertions or waiting for the UI to settle if timing issues are suspected. For example, increase the wait time or add additional checks to ensure that the UI has finished updating.
+4. If the intended behavior is to have only one matching task, update the filter logic to ensure that only tasks fully matching the search term remain visible.</div>
+                </div>
+                
+                <div class="suggested-fix">
+                    <h4>🔧 Suggested Fix</h4>
+                    <div class="content">See explanation</div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="test-failure">
+            <div class="test-header">
+                <h3>should search case-insensitively</h3>
+                <span class="duration">8378ms</span>
+            </div>
+            <div class="test-file">search-filter.spec.js</div>
+            
+            <div class="error-section">
+                <h4>❌ Error</h4>
+                <pre class="error-message">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+Locator: getByText(&#039;CaseSensitiveTest&#039;)
+Expected: visible
+Error: strict mode violation: getByText(&#039;CaseSensitiveTest&#039;) resolved to 3 elements:
+    1) &lt;span class=&quot;task-title&quot;&gt;CaseSensitiveTest&lt;/span&gt; aka getByTestId(&#039;task-9&#039;).getByText(&#039;CaseSensitiveTest&#039;)
+    2) &lt;span class=&quot;task-title&quot;&gt;CaseSensitiveTest&lt;/span&gt; aka getByTestId(&#039;task-23&#039;).getByText(&#039;CaseSensitiveTest&#039;)
+    3) &lt;span class=&quot;task-title&quot;&gt;CaseSensitiveTest&lt;/span&gt; aka getByTestId(&#039;task-35&#039;).getByText(&#039;CaseSensitiveTest&#039;)
+
+Call log:
+[2m  - Expect &quot;toBeVisible&quot; with timeout 5000ms[22m
+[2m  - waiting for getByText(&#039;CaseSensitiveTest&#039;)[22m
+
+
+[0m [90m 53 |[39m       [36mawait[39m dashboardPage[33m.[39maddTask(taskTitle)[33m;[39m
+ [90m 54 |[39m       [36mawait[39m dashboardPage[33m.[39msearch([32m&#039;casesensitivetest&#039;[39m)[33m;[39m
+[31m[1m&gt;[22m[39m[90m 55 |[39m       [36mawait[39m expect(dashboardPage[33m.[39mp</pre>
+            </div>
+
+            <div class="analysis-section">
+                <div class="root-cause">
+                    <h4>🎯 Root Cause</h4>
+                    <div class="content">See explanation</div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>💡 Explanation</h4>
+                    <div class="content">Root Cause: Multiple elements with the exact text &quot;CaseSensitiveTest&quot; are being found instead of a single unique element.
+
+Explanation: The test expects the search functionality to filter and display a single task that matches the criteria, ignoring case differences. However, when the code calls getByText(&#039;CaseSensitiveTest&#039;), it returns three elements because there are multiple tasks with that title. This violates the strict mode expectation that getByText should resolve to only one element when used in this context. This may happen if the test data is not properly isolated or if duplicate entries exist from previous test runs.
+
+Suggested Fix: 
+1. Ensure test isolation by cleaning up or resetting the task list before running the test so that only the expected task exists.
+2. Use uniquely generated task titles for each test run to avoid duplicate entries.
+3. Alternatively, refine your locator by scoping it to a parent element or using additional selectors (e.g., getByTestId) to target the expected element uniquely.</div>
+                </div>
+                
+                <div class="suggested-fix">
+                    <h4>🔧 Suggested Fix</h4>
+                    <div class="content">See explanation</div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="test-failure">
+            <div class="test-header">
+                <h3>should combine search and priority filter</h3>
+                <span class="duration">12864ms</span>
+            </div>
+            <div class="test-file">search-filter.spec.js</div>
+            
+            <div class="error-section">
+                <h4>❌ Error</h4>
+                <pre class="error-message">Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+Locator: getByText(&#039;FilterTest High&#039;)
+Expected: visible
+Error: strict mode violation: getByText(&#039;FilterTest High&#039;) resolved to 3 elements:
+    1) &lt;span class=&quot;task-title&quot;&gt;FilterTest High&lt;/span&gt; aka getByTestId(&#039;task-10&#039;).getByText(&#039;FilterTest High&#039;)
+    2) &lt;span class=&quot;task-title&quot;&gt;FilterTest High&lt;/span&gt; aka getByTestId(&#039;task-26&#039;).getByText(&#039;FilterTest High&#039;)
+    3) &lt;span class=&quot;task-title&quot;&gt;FilterTest High&lt;/span&gt; aka getByTestId(&#039;task-40&#039;).getByText(&#039;FilterTest High&#039;)
+
+Call log:
+[2m  - Expect &quot;toBeVisible&quot; with timeout 5000ms[22m
+[2m  - waiting for getByText(&#039;FilterTest High&#039;)[22m
+
+
+[0m [90m 101 |[39m       [36mawait[39m dashboardPage[33m.[39msearch([32m&#039;FilterTest&#039;[39m)[33m;[39m
+ [90m 102 |[39m       [36mawait[39m dashboardPage[33m.[39msetPriorityFilter([32m&#039;high&#039;[39m)[33m;[39m
+[31m[1m&gt;[22m[39m[90m 103 |[39m       [36mawait[39m expect(dashboardPage[33m.[39mpage</pre>
+            </div>
+
+            <div class="analysis-section">
+                <div class="root-cause">
+                    <h4>🎯 Root Cause</h4>
+                    <div class="content">See explanation</div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>💡 Explanation</h4>
+                    <div class="content">Root Cause: The locator getByText(&#039;FilterTest High&#039;) is resolving to multiple elements instead of a single, unambiguous element.
+
+Explanation: In strict mode, the getByText query expects to find exactly one element with the text &#039;FilterTest High&#039;. However, because there are three elements with that same text (e.g., in different tasks), the query is ambiguous. This ambiguity prevents the test from correctly asserting that the correct element is visible. Essentially, multiple elements are being returned when the test anticipates one, causing the toBeVisible() check to fail.
+
+Suggested Fix: Update the test to use a more specific locator that uniquely identifies the target element. For example, you could:
+1. Add unique identifiers or test IDs to the elements and use getByTestId to locate the desired element.
+2. If you intend to assert visibility on all elements, consider using getAllByText and then iterating over the returned list to check that each element is visible.
+3. Alternatively, narrow down the search context using a parent container or additional attributes to ensure only the correct element is matched.</div>
+                </div>
+                
+                <div class="suggested-fix">
+                    <h4>🔧 Suggested Fix</h4>
+                    <div class="content">See explanation</div>
+                </div>
+            </div>
+        </div>
+        
+        </main>
+
+        <footer>
+            Generated by Failure Explainer | Powered by Azure OpenAI
+        </footer>
+    </div>
+</body>
+</html>
