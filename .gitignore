@@ -46,3 +46,4 @@ coverage/
 *.pptx
 *.pptm
 *.ppt
+/test-failure-explanations
