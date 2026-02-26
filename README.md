@@ -1,8 +1,21 @@
-## 🚀 Quick Start
+#Test Automation POC
+
+A comprehensive Playwright test automation framework featuring AI-powered test failure analysis, GitHub Copilot agents for test generation/healing, and multi-browser support with Allure reporting.
+
+## Features
+
+- **End-to-End Testing** with Playwright across Chromium, Firefox, and WebKit
+- **AI-Powered Failure Analysis** using Azure OpenAI for intelligent debugging
+- **GitHub Copilot Agents** for automated test generation and self-healing tests
+- **Page Object Model** architecture for maintainable tests.
+- **CI/CD Ready** with GitHub Actions workflow
+
+## Quick Start
 
 ### Prerequisites
 - Node.js 18+ installed
 - npm or yarn package manager
+- Python 3.8+ (for AI failure explainer)
 
 ### Installation
 
@@ -15,6 +28,9 @@ cd frontend && npm install && cd ..
 
 # Install Playwright browsers
 npx playwright install
+
+# Install Python dependencies (for AI failure explainer)
+pip install openai python-dotenv
 ```
 
 ### Running the Application
@@ -32,7 +48,7 @@ npm run dev:frontend   # Frontend on http://localhost:5173
 - Email: `admin@test.com`
 - Password: `admin123`
 
-## 🧪 Running Tests
+## Running Tests
 
 ### All Tests
 ```bash
@@ -54,33 +70,14 @@ npm run test:ui
 npm run test:report
 ```
 
-### Allure Reports
-
-Allure results are automatically collected every time tests run (via the `allure-playwright` reporter configured in `playwright.config.js`). Results accumulate across runs, giving you a historical trend view.
-
-**Generate and open the Allure report:**
+### Run with AI Failure Explanation
 ```bash
-# 1. Run your tests (results are written to allure-results/)
-npm test
+# Run tests and generate AI-powered failure explanations
+npm run test
 
-# 2. Generate the HTML report from collected results
-npm run allure:generate
-
-# 3. Open the report in your browser
-npm run allure:report
+# Or generate explanations for existing test results
+npm run explain
 ```
-
-**Reset/clear all Allure data** (start fresh before a new test cycle):
-```bash
-npm run allure:reset
-```
-
-> **Note:** Allure requires the [Allure CLI](https://allurereport.org/docs/install/) to be installed and available on your `PATH`. Install it via:
-> ```bash
-> npm install -g allure-commandline
-> # or via Scoop on Windows:
-> scoop install allure
-> ```
 
 ### Run Specific Test File
 ```bash
@@ -96,84 +93,71 @@ npx playwright test --project=firefox
 npx playwright test --project=webkit
 ```
 
-## 📁 Project Structure
+## AI-Powered Features
+
+### Test Failure Explainer
+
+The AI failure explainer analyzes test failures using Azure OpenAI and provides:
+- **Root Cause Analysis** - Identifies the underlying cause of failures
+- **Plain English Explanations** - Describes what went wrong
+- **Suggested Fixes** - Actionable steps to resolve issues
+- **Visual Reports** - Interactive HTML report with screenshots and traces
+
+#### Setup
+
+Create a `.env` file with your Azure OpenAI credentials:
+
+```env
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
+AZURE_OPENAI_API_KEY=your-api-key
+AZURE_OPENAI_DEPLOYMENT_NAME=o3-mini
+AZURE_OPENAI_API_VERSION=2024-12-01-preview
+```
+
+#### Usage
+
+```bash
+# Run tests and automatically generate AI explanations
+npm run test:explain
+
+# Generate explanations for existing test results
+npm run explain
+```
+
+Reports are saved to `test-failure-explanations/` with both HTML and JSON formats.
+
+
+## Project Structure
 
 ```
 ├── backend/
-│   └── server.js          # Express.js API server
+│   └── server.js              # Express.js API server
 ├── frontend/
 │   ├── src/
-│   │   ├── App.jsx        # Main React component
-│   │   ├── App.css        # Component styles
-│   │   └── index.css      # Global styles
-│   └── index.html         # HTML template
+│   │   ├── App.jsx            # Main React component
+│   │   ├── App.css            # Component styles
+│   │   └── index.css          # Global styles
+│   └── index.html             # HTML template
 ├── tests/
-│   ├── auth.spec.js       # Authentication tests
-│   ├── tasks.spec.js      # Task CRUD tests
+│   ├── auth.spec.js           # Authentication tests
+│   ├── tasks.spec.js          # Task CRUD tests
 │   ├── search-filter.spec.js  # Search & filter tests
-│   ├── api.spec.js        # API endpoint tests
+│   ├── api.spec.js            # API endpoint tests
 │   ├── accessibility.spec.js  # Accessibility tests
-│   └── responsive.spec.js # Responsive design tests
-├── .github/
-│   └── workflows/
-│       └── playwright.yml # CI/CD pipeline
-├── playwright.config.js   # Playwright configuration
+│   ├── responsive.spec.js     # Responsive design tests
+│   └── seed.spec.js           # Seed/setup test
+├── pages/
+│   ├── BasePage.js            # Base page object
+│   ├── LoginPage.js           # Login page object
+│   └── DashboardPage.js       # Dashboard page object
+├── scripts/
+│   └── failure_explainer.py   # AI-powered failure analysis
+|
+├── test-failure-explanations/ # AI analysis output
+├── allure-results/            # Allure test results
+├── playwright-report/         # Playwright HTML report
+├── playwright.config.js       # Playwright configuration
+├── PROMPTS.md                 # Test generation prompts
 └── package.json
 ```
 
-## 🔬 Test Suites
-
-### 1. Authentication Tests (`auth.spec.js`)
-- Login form display
-- Invalid credentials handling
-- Successful login flow
-- Registration flow
-- Logout functionality
-
-### 2. Task Management Tests (`tasks.spec.js`)
-- Display task statistics
-- Create new tasks
-- Set task priority
-- Toggle task completion
-- Delete tasks
-
-### 3. Search & Filter Tests (`search-filter.spec.js`)
-- Search functionality
-- Case-insensitive search
-- Priority filtering
-- Combined search + filter
-
-### 4. API Tests (`api.spec.js`)
-- Health check endpoint
-- Authentication endpoints
-- Task CRUD endpoints
-- Search endpoint
-
-### 5. Accessibility Tests (`accessibility.spec.js`)
-- Form labels
-- Keyboard navigation
-- ARIA attributes
-- Focus management
-
-### 6. Responsive Tests (`responsive.spec.js`)
-- Mobile viewport (375px)
-- Tablet viewport (768px)
-- Desktop viewport (1920px)
-
-## 🔄 CI/CD Integration
-
-The project includes a GitHub Actions workflow (`.github/workflows/playwright.yml`) that:
-
-1. Runs on push/PR to main branch
-2. Tests on Chromium, Firefox, and WebKit in parallel
-3. Uploads test reports as artifacts
-4. Can be triggered manually via `workflow_dispatch`
-
-### Triggering Tests in CI
-
-```bash
-# Push to trigger tests
-git push origin main
-
-# Or manually trigger via GitHub Actions UI
-```
